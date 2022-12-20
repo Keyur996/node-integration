@@ -1,0 +1,12 @@
+# dependacies
+node_modules/
+package-lock.json
+
+
+# secrets
+.env
+.env.development
+.env.production
+
+# images
+public/*
