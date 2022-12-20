@@ -6,7 +6,7 @@ export const validationMiddleware = (
   type: ObjectSchema | StringSchema | NumberSchema,
   value: string | 'body' | 'query' | 'params' = 'body',
 ) => {
-  return async (req: Request & { [key: string]: any }, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
     try {
       req[value] = await type.validateAsync(req[value]);
       next();

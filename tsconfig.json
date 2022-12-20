@@ -9,6 +9,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "dist",
+    "noImplicitAny": false,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
