@@ -11,6 +11,7 @@ model User {
   id                    Int               @id @default(autoincrement())
   email                 String            @unique
   name                  String?
+  password              String
   post_creator          Post[]            @relation("post_created_by")
   post_modifier         Post[]            @relation("post_updated_by")
   access_token_creator  UserAccessToken[] @relation("access_token_created_by")

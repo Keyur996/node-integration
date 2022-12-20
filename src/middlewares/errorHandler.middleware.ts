@@ -26,6 +26,6 @@ export const errorHandlerMIddleWare = (
   if (err instanceof HttpException) {
     return generalResponse(res, err, err.message, 'error', false, err.statusCode);
   }
-
+  console.log('Error', err);
   return generalResponse(res, err, 'Something Went Wrong !!', 'error', false, 500);
 };
