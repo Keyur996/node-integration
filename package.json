@@ -9,7 +9,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "prisma": {
+    "schema": "src/prisma/schema.prisma"
+  },
   "dependencies": {
+    "@prisma/client": "^4.8.0",
     "axios": "^1.2.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -32,6 +36,7 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.17",
     "prettier": "2.8.1",
+    "prisma": "^4.8.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.1",

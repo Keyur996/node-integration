@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    Int               @id @default(autoincrement())
+  email                 String            @unique
+  name                  String?
+  post_creator          Post[]            @relation("post_created_by")
+  post_modifier         Post[]            @relation("post_updated_by")
+  access_token_creator  UserAccessToken[] @relation("access_token_created_by")
+  access_token_modifier UserAccessToken[] @relation("access_token_updated_by")
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String?
+  published  Boolean  @default(false)
+  created_by Int
+  updated_by Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  creator    User     @relation(name: "post_created_by", fields: [created_by], references: [id])
+  modifier   User     @relation(name: "post_updated_by", fields: [updated_by], references: [id])
+}
+
+model UserAccessToken {
+  id               Int      @id @default(autoincrement())
+  integration_type String
+  user_id          Int
+  access_token     String   @db.Text
+  refresh_token    String   @db.Text
+  expire_in        BigInt
+  token_created_at DateTime
+  other_details    Json?
+  created_by       Int
+  updated_by       Int
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  creator          User     @relation(name: "access_token_created_by", fields: [created_by], references: [id])
+  modifier         User     @relation(name: "access_token_updated_by", fields: [updated_by], references: [id])
+}
