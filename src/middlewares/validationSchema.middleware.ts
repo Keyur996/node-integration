@@ -1,26 +1,19 @@
-import { generalResponse } from '@/helpers/common.helper';
+import { generalResponse } from '@/helpers/common.helpers';
 import { NextFunction, Request, Response } from 'express';
 import { NumberSchema, ObjectSchema, StringSchema } from 'joi';
-
-const errorFilterValidator = (error: Array<Error>) => {
-  const extractedErrors: Array<string> = [];
-  error.map((err: Error) => extractedErrors.push(err.message));
-  const errorResponse = extractedErrors.join(', ');
-  return errorResponse;
-};
 
 export const validationMiddleware = (
   type: ObjectSchema | StringSchema | NumberSchema,
   value: string | 'body' | 'query' | 'params' = 'body',
 ) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request & { [key: string]: any }, res: Response, next: NextFunction) => {
     try {
-      (req as any)[value] = await type.validateAsync((req as any)[value]);
+      req[value] = await type.validateAsync(req[value]);
       next();
     } catch (e) {
       const error: any = e;
       if (error.details) {
-        const errorResponse = errorFilterValidator(error.details);
+        const errorResponse = (error?.details || []).map((err: Error) => err.message).toString();
         return generalResponse(res, null, errorResponse, 'error', true, 400);
       }
       return generalResponse(res, null, 'Something went wrong!', 'success', true, 400);

@@ -8,6 +8,7 @@ import compression from 'compression';
 import { Route } from '@interfaces/route.interface';
 import { NODE_ENV, PORT } from '@/config';
 import { IncomingMessage, ServerResponse, Server } from 'http';
+import { errorHandlerMIddleWare } from '@middlewares/errorHandler.middleware';
 
 export default class App {
   private readonly port: number;
@@ -21,6 +22,7 @@ export default class App {
     this.env = NODE_ENV || 'development';
     this.setMiddleWares();
     this.initializeRoutes(routes);
+    this.setErrorHandlerMiddleWare();
   }
 
   public readonly listen = () => {
@@ -49,5 +51,9 @@ export default class App {
     routes.map((route) => {
       this.app.use('/api/v1/', route.router);
     });
+  };
+
+  private readonly setErrorHandlerMiddleWare = () => {
+    this.app.use(errorHandlerMIddleWare);
   };
 }

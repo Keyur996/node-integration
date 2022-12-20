@@ -3,7 +3,7 @@ import { Response, NextFunction, Request } from 'express';
 import { ZOOM_CLIENT_ID, ZOOM_CLIENT_SECRET, ZOOM_OAUTH_ENDPOINT, ZOOM_REDIRECT_URI } from '@/config';
 import { HttpException } from '@exceptions/HttpException';
 import { URLSearchParams } from 'url';
-import { generalResponse } from '@/helpers/common.helper';
+import { generalResponse } from '@/helpers/common.helpers';
 
 export default class ZoomController {
   constructor() {
