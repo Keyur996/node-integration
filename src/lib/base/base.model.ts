@@ -5,10 +5,12 @@ export abstract class BaseModel<M extends object> {
     // do nothing
   }
 
+  private readonly ucFirst = (str: string) => `${str[0].toUpperCase()}${str.slice(1)}`;
+
   protected readonly setInstance = (data?: { [key: string]: any }) => {
     Object.keys(data || {}).forEach((key) => {
-      if (typeof this[key] === 'function') {
-        this[key](data?.[key]);
+      if (typeof this[`set${this.ucFirst(key)}`] === 'function') {
+        this[`set${this.ucFirst(key)}`](data?.[key]);
       } else if (data?.[key] && key in this) {
         this[key] = data?.[key];
       }
