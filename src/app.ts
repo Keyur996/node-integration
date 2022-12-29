@@ -63,7 +63,7 @@ export default class App {
   };
 
   private readonly setPassportStrategies = () => {
-    const strategies = Strategies.getStrategies(process.env, 'http://localhost:8000');
+    const strategies = Strategies.getStrategies(process.env, 'http://localhost:8000/api/v1');
     strategies.forEach((strategy) => {
       passport.use(new strategy.Ctor(strategy.config!, strategy.toUser));
     });
@@ -74,6 +74,7 @@ export default class App {
 
   private readonly setPassportRoutes = () => {
     const strategies = Strategies.getStrategies(process.env, 'http://localhost:8000');
+    // console.log('Started', strategies);
     const opts: Record<string, any> = {};
     if (strategies.length > 0) {
       opts.strategies = strategies;

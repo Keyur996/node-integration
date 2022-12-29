@@ -54,21 +54,21 @@ export default class StrategiesController {
     passport.authenticate(type, (error, user) => {
       if (error || !user) {
         res.cookie(
-          tokenCookieName,
+          tokenCookieName || 'token-cookie',
           '',
           this.cookieOpts({
             reset: true,
             httpOnly: true,
-            domain: cookieDomain,
+            domain: cookieDomain || 'localhost:5000',
           }),
         );
         res.cookie(
-          profileCookieName,
+          profileCookieName || 'profile-cookie',
           JSON.stringify({ error: error || 'No user was returned' }),
           this.cookieOpts({
             httpOnly: false,
-            domain: cookieDomain,
-            maxAge,
+            domain: cookieDomain || 'localhost:5000',
+            maxAge: maxAge || 1000 * 60 * 60 * 24 * 10,
           }),
         );
         if (req.session!.failure) {
@@ -76,20 +76,20 @@ export default class StrategiesController {
         }
       } else if (user) {
         res.cookie(
-          tokenCookieName,
-          jwt.sign(user, tokenSecret),
+          tokenCookieName || 'token-cookie',
+          jwt.sign(user, tokenSecret || 'my-top'),
           this.cookieOpts({
             httpOnly: true,
-            domain: cookieDomain,
+            domain: cookieDomain || 'localhost:5000',
             maxAge,
           }),
         );
         res.cookie(
-          profileCookieName,
+          profileCookieName || 'profile-cookie',
           JSON.stringify(user.profile),
           this.cookieOpts({
             httpOnly: false,
-            domain: cookieDomain,
+            domain: cookieDomain || 'localhost:5000',
             maxAge,
           }),
         );

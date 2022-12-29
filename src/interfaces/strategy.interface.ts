@@ -11,10 +11,15 @@ export interface StrategiesOptions {
   readonly maxAge?: number;
 }
 
-export interface Strategy {
-  Ctor: { new (config: StrategyOption & { scope?: string[] }, toUser: (...args: any[]) => any): passport.Strategy };
-  getConfig: (env: NodeJS.Process['env'], callbackURL: string) => StrategyOption & { scope?: string[] };
-  toUser: (...args: any[]) => any;
-  config?: StrategyOption & { scope?: string[] };
-  type: string;
+export abstract class Strategy {
+  abstract Ctor: {
+    new (config: StrategyOption & { scope?: string[] }, toUser: (...args: any[]) => any): passport.Strategy;
+  };
+  abstract getConfig: (
+    env: NodeJS.Process['env'],
+    callbackURL: string,
+  ) => (StrategyOption & { scope?: string[] }) | undefined;
+  abstract toUser: (...args: any[]) => any;
+  abstract config?: StrategyOption & { scope?: string[] };
+  abstract type?: string;
 }
