@@ -7,7 +7,7 @@ import { User } from '../user/user.model';
 import { AuthData } from './types/auth.type';
 import UserService from '../user/user.service';
 import { HttpException } from '@exceptions/HttpException';
-import { COOKIE_EXPIRES_IN, JWT_EXPIRES_IN, JWT_SECRET } from '@/config';
+import { COOKIE_EXPIRES_IN, JWT_EXPIRES_IN } from '@/config';
 import { generalResponse } from '@/helpers/common.helpers';
 
 export default class AuthController {
